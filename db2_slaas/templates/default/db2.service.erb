@@ -1,0 +1,16 @@
+#!/bin/bash
+#
+
+case $1 in
+
+  start)
+    su - <%= @params['instance_username'] %> -c 'db2start'
+    ;;
+
+  stop)
+    su - <%= @params['instance_username'] %> -c 'db2stop'
+    ;;
+
+esac
+
+exit 0

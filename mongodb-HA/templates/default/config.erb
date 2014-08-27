@@ -1,0 +1,53 @@
+#!/bin/bash
+
+# This shells script is used to generate replica set configuration file which will get run during cookbook execution and prepare replica set. 
+
+ECHO=/bin/echo
+
+function usage()
+{
+	${ECHO} "Usage :"
+	${ECHO} "run.sh \"<replica_set_name>\" \"<PrimaryIP>\" \"<Port>\" \"<List of Secondary>\" \"<Port>\" \"<ArbiterIP>\" \"<Port>\" \"<Output File Name>\" "
+}
+
+
+REPLICA_SET_NAME=$1
+
+PRIMARY_IP_ADDRESS=$2
+PRIMARY_MONGO_PORT=$3
+
+SECONDARY_IP_ADDRESSES=$4
+SECONDARY_MONGO_PORT=$5
+
+ARBITER_IP_ADDRESS=$6
+ARBITER_MONGO_PORT=$7
+
+OUTPUT_FILE=$8
+#OUTPUT_FILE=$6
+
+
+${ECHO} "config = {" > ${OUTPUT_FILE}
+${ECHO} "    _id : \"${REPLICA_SET_NAME}\", " >> ${OUTPUT_FILE}
+
+${ECHO} "	members : [" >> ${OUTPUT_FILE}
+${ECHO} " 		{_id : 0, host : \"${PRIMARY_IP_ADDRESS}:${PRIMARY_MONGO_PORT}\"}," >> ${OUTPUT_FILE}
+
+counter=0
+		if [ ! -z "$6" ]; then
+			counter=$((counter+1))
+${ECHO} " 		{_id : ${counter}, host : \"${ARBITER_IP_ADDRESS}:${ARBITER_MONGO_PORT}\", arbiterOnly: true }," >> ${OUTPUT_FILE}
+			
+		fi
+
+
+for machine in ${SECONDARY_IP_ADDRESSES}
+do
+	counter=$((counter+1))
+	${ECHO} " 		{_id : ${counter}, host : \"${machine}:${SECONDARY_MONGO_PORT}\"}," >> ${OUTPUT_FILE}
+	
+done
+
+${ECHO} "	]"  >> ${OUTPUT_FILE}
+${ECHO} "}"  >> ${OUTPUT_FILE}
+
+${ECHO} "rs.initiate(config)"  >> ${OUTPUT_FILE}

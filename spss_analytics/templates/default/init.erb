@@ -1,0 +1,53 @@
+#!/bin/bash
+# chkconfig: 2345 95 20
+# description: Some description
+# What your script does (not sure if this is necessary though)
+# processname: spss_analytics
+
+
+SPSS_START_SCRIPT=<%= node['spss']['analytics_home']%>/bin/start.sh 
+SPSS_STOP_SCRIPT=<%= node['spss']['analytics_home']%>/bin/stop.sh
+
+
+ulimit -f "<%= node[:spssanalytics][:ulimit][:fsize]%>"
+ulimit -t "<%= node[:spssanalytics][:ulimit][:cpu] %>"
+ulimit -v "<%= node[:spssanalytics][:ulimit][:as]%>"
+ulimit -n "<%= node[:spssanalytics][:ulimit][:nofile]%>"
+ulimit -m "<%= node[:spssanalytics][:ulimit][:rss]%>"
+ulimit -u "<%= node[:spssanalytics][:ulimit][:nproc]%>"
+ 
+start() {
+	path1="<%= node['spss']['analytics_home']%>/bin/"
+	cd "$path1"
+   	
+   	$SPSS_START_SCRIPT start 
+    
+}
+ 
+stop() {
+	path1="<%= node['spss']['analytics_home']%>/bin/"
+	cd "$path1"
+       $SPSS_STOP_SCRIPT 60 -force &
+   
+  
+}
+
+
+ 
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    restart)
+        stop
+        sleep 30
+        start
+        ;;
+    *)
+        $ECHO "Usage: Modeler {start|stop|restart}"
+        exit 1
+esac
+exit 0

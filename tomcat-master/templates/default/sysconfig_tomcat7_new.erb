@@ -1,0 +1,35 @@
+#!/bin/sh
+
+# chkconfig: 35 85 15
+
+ECHO=/bin/echo
+
+TOMCAT_START_SCRIPT=<%= node['tomcat']['home']%>/bin/startup.sh
+TOMCAT_STOP_SCRIPT=<%= node['tomcat']['home']%>/bin/shutdown.sh
+
+start() {
+    $ECHO -n "Starting TOMCAT Server"
+    $TOMCAT_START_SCRIPT &
+}
+ 
+stop() {
+    $ECHO -n "Stopping TOMCAT Server"
+    $TOMCAT_STOP_SCRIPT 10 -force &
+}
+ 
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    restart)
+        stop
+        start
+        ;;
+    *)
+        $ECHO "Usage: tomcat7 {start|stop|restart}"
+        exit 1
+esac
+exit 0

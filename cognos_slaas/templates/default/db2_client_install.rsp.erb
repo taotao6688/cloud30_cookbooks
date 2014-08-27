@@ -1,0 +1,26 @@
+*-----------------------------------------------------
+* Generated response file used by the DB2 Setup wizard
+* generation time: 7/25/14 6:37 AM
+*-----------------------------------------------------
+*  Product Installation 
+LIC_AGREEMENT       = ACCEPT
+PROD       = CLIENT
+FILE       = <%= @file_path %>
+INSTALL_TYPE       = TYPICAL
+* ----------------------------------------------
+*  Instance properties           
+* ----------------------------------------------
+INSTANCE       = db2inst1
+db2inst1.TYPE       = client
+*  Instance-owning user
+db2inst1.NAME       = db2inst1
+db2inst1.GROUP_NAME       = db2iadm1
+db2inst1.HOME_DIRECTORY       = <%= @db2inst1_home %>
+db2inst1.PASSWORD       = <%= @db2_client_password %>
+db2inst1.AUTOSTART       = NO
+db2inst1.TYPE            = CLIENT          ** CLIENT
+db2inst1.AUTHENTICATION  = SERVER          ** CLIENT, SERVER, or SERVER_ENCRYPT
+*-----------------------------------------------
+*  Installed Languages 
+*-----------------------------------------------
+LANG       = EN

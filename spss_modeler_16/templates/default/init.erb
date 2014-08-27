@@ -1,0 +1,41 @@
+#!/bin/sh
+
+# chkconfig: 35 85 15
+
+ECHO=/bin/echo
+
+SPSS_START_SCRIPT=<%= node['spss']['modeler_home']%>/modelersrv.sh 
+SPSS_STOP_SCRIPT="<%= node['spss']['modeler_home']%>/modelersrv.sh stop"
+
+start() {
+    $ECHO -n "Starting SPSS Modeler Server"
+    $SPSS_START_SCRIPT start &
+    $ECHO "."
+}
+ 
+stop() {
+    $ECHO -n "Stopping SPSS Modeler Server"
+    $SPSS_STOP_SCRIPT 60 -force &
+    while [ "$(ps -aef | grep modelersrv_16_0 | grep -v grep | wc -l)" -gt "0" ]; do
+        sleep 5; $ECHO -n "."
+    done
+    $ECHO "."
+}
+ 
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    restart)
+        stop
+        sleep 30
+        start
+        ;;
+    *)
+        $ECHO "Usage: spss_modeler {start|stop|restart}"
+        exit 1
+esac
+exit 0
