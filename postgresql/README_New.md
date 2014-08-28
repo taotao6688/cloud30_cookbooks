@@ -18,6 +18,14 @@ Requirements
 
 - Please make sure, all postgresql related RPM files (mentioned below) are available at RPM repository.
 
+- As root, you are able to list above RPMs if you run command "yum list | grep -i postgresql93". In case of any failure, please clear your yum cache and recreate it.
+
+### Users
+- Please make sure, user "postgres" is not present on target node. In case user is present, please remove user with "userdel -r postgres" command
+
+
+### Directories
+- Please make sure, "/var/lib/pgsql" directory doesn't exist. 
 
 Usage
 -----
@@ -47,7 +55,7 @@ Please make sure, role definition looks like
 
  -  Once role is created, bootstrap the node as
 
-	knife bootstrap <IP> -x root -P <password> -r role[role_postgresql] -d <distribution>  -j '{"source_path":"URL"}'
+	knife bootstrap <IP> -x root -P <password> -r role[role_postgresql] -d <distribution>  -j '{"postgresql": {"source_path":"URL"}}'
 	
 	where
 		IP : IP address of node where postgresql need to install
@@ -65,7 +73,7 @@ Please make sure, role definition looks like
 		
 		So user can run command like
 		
-		knife bootstrap 172.16.1.154 -x root -P test4pass -r role[role_postgresql] -d rhel -j '{"source_path":"http://172.16.0.10:8080/redhat/rhel/6Server/PSL/"}'
+		knife bootstrap 172.16.1.154 -x root -P test4pass -r role[role_postgresql] -d rhel -j '{"postgresql": {"source_path":"http://172.16.0.10:8080/redhat/rhel/6Server/PSL/"}}'
 		
 		
 ## Verification
@@ -76,7 +84,7 @@ Please make sure, role definition looks like
 	
 	It should give output as 
 			
-		postgres  302972       1  0 22:42 ?        00:00:00 /usr/pgsql-9.3/bin/postmaster -p 5432 -D /var/lib/pgsql/9.3/data
+	postgres  302972       1  0 22:42 ?        00:00:00 /usr/pgsql-9.3/bin/postmaster -p 5432 -D /var/lib/pgsql/9.3/data
 	
 
 License and Authors

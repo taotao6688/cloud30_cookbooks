@@ -1,5 +1,5 @@
 [base]
-name =<%= node['postgresql']['repo_name'] %>
-baseurl = <%= node['postgresql']['baseurl'] %>
+name =<%= node['postgresql']['name'] %>
+baseurl =<%= node['postgresql']['source_path'] %>
 gpgcheck =<%= node['postgresql']['gpgcheck'] %>
 

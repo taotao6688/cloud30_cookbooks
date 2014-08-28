@@ -51,15 +51,13 @@ Create role with command : knife role create role_mongodb
 
  -  Once role is created, bootstrap as
  
-	knife bootstrap <IP> -x root -P <password> -r role[role_mongodb] -d <distribution>  -j '{"source_path":"URL","mongodb_port":"27017","replicasetname":"rs1"}'
+	knife bootstrap <IP> -x root -P <password> -r role[role_mongodb] -d <distribution>  -j '{"mongodb": {"source_path":"URL"}}'
 	
 	where
 		IP : IP address of node where MongoDB need to install
 		Password : Root password of IP address of node
 		Distribution : Target distribution available
-		URL : Repository Path where MongoDB RPMs are found
-		mongodb_port : Port for MongoDB
-		replicasetname : Name for replicaset 		
+		URL : Repository Path where MongoDB RPMs are found	
 
 - Example : Please note that, this is just example. Please change following values are per your requirements. This values should not be used during cookbook execution.
 
@@ -67,12 +65,10 @@ Create role with command : knife role create role_mongodb
 		Password : test4pass
 		Distribution : rhel (Please check CHEF documentation for more help)
 		URL : http://172.16.0.10:8080/redhat/rhel/6Server/PSL/
-		mongodb_port: 27017
-		replicasetname : rs1
 		
 		So user can run command like
-		
-			knife bootstrap 172.16.1.152  -x root -P test4pass -r role[role_mongodb] -d rhel -j '{"source_path":"http://172.16.0.10:8080/redhat/rhel/6Server/PSL/","mongodb_port":"27017","replicasetname":"rs1"}' 
+					
+			knife bootstrap 172.16.1.152 -x root -P test4pass -r role[role_mongodb] -d rhel -j '{"mongodb": {"source_path":"http://172.16.1.153"}}'
 
 
 ## Verification

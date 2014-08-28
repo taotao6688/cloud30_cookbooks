@@ -53,7 +53,7 @@ Please make sure, role definition looks like
 	 
 -  Once role is created, bootstrap the node as
 
-	knife bootstrap <IP> -x root -P <password> -r role[role_spss_modeler_16] -d <distribution>  -j '{"source_path":"URL","dirpath":"spss_modeler_server_home"}'
+	knife bootstrap <IP> -x root -P <password> -r role[role_spss_modeler_16] -d <distribution>  -j '{"spss_modeler": {"source_path":"URL","dirpath":"spss_modeler_server_home"}}'
 	
 	where
 		IP : IP address of node where SPSS Modeler Server need to install
@@ -64,16 +64,15 @@ Please make sure, role definition looks like
 		
 - Example : Please note that, this is just example. Please change following values are per your requirements. This values should not be used during cookbook execution.
 
-		IP : 172.16.1.154 (Target Node for SPSS Modeler Server installation)
+		IP : 172.16.1.152 (Target Node for SPSS Modeler Server installation)
 		Password : test4pass
 		Distribution : rhel (Please check CHEF documentation for more help)
-		URL : http://172.16.1.153 (So if you hit "http://172.16.1.153/spss_mod_svr_16.0_linux_ml.bin" from browser, you should able to download this file)
-		SSO_DOMAIN : domain1
-		NODE_NAME : fat-tigris (Please execute command "hostname" to figure out fully qualified name)
+		source_path : http://172.16.1.153 (So if you hit "http://172.16.1.153/spss_mod_svr_16.0_linux_ml.bin" from browser, you should able to download this file)
+		dirpath : /usr/IBM/SPSS/ModelerServer/16.0
 		
 		So user can run command like
 		
-		knife bootstrap 172.16.1.154 -x root -P test4pass -r role[role_spss_modeler_16] -d rhel -j '{"source_path":"http://172.16.1.153","dirpath":"/usr/IBM/SPSS/ModelerServer/16.0"}'	
+		knife bootstrap 172.16.1.152 -x root -P test4pass -r role[role_spss_modeler_16] -d rhel -j '{"spss_modeler": {"source_path":"http://172.16.1.153","dirpath":"/usr/IBM/SPSS/ModelerServer/16.0"}}'		
 		
 		
 -  On target node, execute following command to verify installation

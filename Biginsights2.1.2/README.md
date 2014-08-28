@@ -18,15 +18,22 @@ Requirements
 
 
 ### Package Requirment
-- Please make sure, targeted node has following libraries available and installed successfully.
+- Please make sure, all the below mentioned libraries are available at some RPM repository.
 	- expect
 	- ntp	
-	
-- User can install these packages with command as root
-	- yum install expect
-	- yum install ntp 
-	
-	
+
+- To confirm whether RPM are part of RPM repository, run command "yum list | grep -i expect" as root, you are able to list rpm for expect.	Similar check should be done for ntp package.
+
+
+### resolve.conf setting
+- Please make sure, you have proper setting done for /etc/resolve.conf for nameserver before proceeding further. In case of wrong setting, it will result in failure in ntpstart time synchronization.
+
+
+### ntpstat time synchronization
+- Please make sure, ntpstat program on targeted node, is synchronized with a time server. Do not proceed in case there is issue.
+- In case any issue, please restart ntpd server as "service ntpd restart" following by "ntpdate". It should show correct time
+
+
 ### Default Password for Root
 - For installation purpose, please make sure, root password is "test4pass". You can change it later. Cookbook will fail if password is different.
 
@@ -37,6 +44,13 @@ Requirements
 
 ### SSH Authentication
 - Please make sure you are able to login to target node with command :  ssh root@<target_node_name> and vice versa. It is necessary that both nodes (Chef Server node & target node) must be able to login with SSH without password. Do not proceed if this is not working. 
+
+- User can use following steps to configure SSH authentication on chef server & target node
+	- As root, run command : ssh-keygen
+	- Proceed with steps
+	- As root, run commmand : ssh-copy-id -i root@ip_address where ip_address is node where you want to login without password
+	- Verify ssh root@<target_node_name>
+
 
 
 ### Space Required
@@ -76,28 +90,31 @@ Please make sure, role definition looks like
 
  -  Once role is created, bootstrap the node as
 
-	knife bootstrap <IP> -x root -P <password> -r role[role_biginsights] -d <distribution>  -j '{"source_path":"URL","sso_domain":"SSO_DOMAIN","node_name":"NODE_NAME"}'
+	knife bootstrap <IP> -x root -P <password> -r role[role_biginsights] -d <distribution>  -j '{"biginsights": {"source_path":"URL","rpm_path":"RPM_URL","sso_domain":"SSO_DOMAIN","node_name":"NODE_NAME"}}'
 	
 	where
 		IP : IP address of node where BigInsights need to install
 		Password : Root password of IP address of node
 		Distribution : Target distribution available
 		URL : HTTP path mentioned in `Installable` section
+		RPM_URL : RPM Path where you will find the required libraries mentioned above
 		SSO_DOMAIN : SSO Domain name 
 		NODE_NAME : Fully qualified name of target name. Don't provide any IP address. 
 		
 - Example : Please note that, this is just example. Please change following values are per your requirements. This values should not be used during cookbook execution.
 
-		IP : 172.16.1.154 (Target Node for BigInsights installation)
+		IP : 172.16.1.184 (Target Node for BigInsights installation)
 		Password : test4pass
 		Distribution : rhel (Please check CHEF documentation for more help)
-		URL : http://172.16.1.153 (So if you hit "http://172.16.1.153/IS_BIGINSIGHTS_EE_V2.1.2_LNX64.tar.gz" from browser, you should able to download this file)
-		SSO_DOMAIN : domain1
-		NODE_NAME : fat-tigris (Please execute command "hostname" to figure out fully qualified name)
+		source_path : http://172.16.1.153 (So if you hit "http://172.16.1.153/IS_BIGINSIGHTS_EE_V2.1.2_LNX64.tar.gz" from browser, you should able to download this file)
+		rpm_path : http://172.16.0.10:8080/redhat/rhel/6Server/x86_64/ (Where you will find the required libraries mentioned above)
+		sso_domain : domain1
+		node_name : fat-euphrates (Please execute command "hostname" to figure out fully qualified name)
 		
 		So user can run command like
 		
-		knife bootstrap 172.16.1.154 -x root -P test4pass -r role[role_biginsights] -d rhel -j '{"source_path":"http://172.16.1.153","sso_domain":"domain1","node_name":"fat-tigris"}'
+		knife bootstrap 172.16.1.184 -x root -P test4pass -r role[role_biginsights] -d rhel -j '{"biginsights": {"source_path":"http://172.16.1.153","rpm_path":"http://172.16.0.10:8080/redhat/rhel/6Server/x86_64/","sso_domain":"domain1","node_name":"fat-euphrates"}}'	
+
 		
 		
 Note

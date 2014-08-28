@@ -13,9 +13,6 @@ Requirements
 - Please make sure, `anl_svr_1.0.1.0_l86_en_.tar.gz` is available for installation over HTTP URL as `http://0.0.0.0/`
 
 
-### Dependencies
-
-
 Usage
 -----
 You need to create role specific to SPSS Analytics Server before starting cookbook execution.
@@ -44,7 +41,7 @@ Please make sure, role definition looks like
 	 
 -  Once role is created, bootstrap the node as
 
-	knife bootstrap <IP> -x root -P <password> -r role[role_spss_analytics] -d <distribution>  -j '{"source_path":"URL","dirpath":"spss_analytics_server_home"}'
+	knife bootstrap <IP> -x root -P <password> -r role[role_spss_analytics] -d <distribution>  -j '{"spss_analytics": {"source_path":"URL","dirpath":"spss_analytics_server_home"}}'		
 	
 	where
 		IP : IP address of node where SPSS analytics Server need to install
@@ -52,6 +49,21 @@ Please make sure, role definition looks like
 		Distribution : Target distribution available
 		URL : HTTP path mentioned in `Installable` section
 		spss_analytics_server_home : SPSS Analytics Server Home Directory.
+		
+- Example : Please note that, this is just example. Please change following values are per your requirements. This values should not be used during cookbook execution.
+
+		IP : 172.16.1.152 (Target Node for SPSS Analytics Server installation)
+		Password : test4pass
+		Distribution : rhel (Please check CHEF documentation for more help)
+		source_path : http://172.16.1.153 (So if you hit "http://172.16.1.153/anl_svr_1.0.1.0_l86_en_.tar.gz" from browser, you should able to download this file)
+		dirpath : usr/IBM/SPSS/AnalyticsServer
+
+		
+		So user can run command like
+		
+		knife bootstrap 172.16.1.152 -x root -P test4pass -r role[role_spss_analytics] -d rhel -j '{"spss_analytics": {"source_path":"http://172.16.1.153","dirpath":"/usr/IBM/SPSS/AnalyticsServer"}}'		
+			
+		
 
 Commands
 ---------
@@ -71,10 +83,8 @@ User can manually stop SPSS Analytics Server with following command
 	
 	It should give output as
 
-		root      7229     1  0 15:55 ?        00:00:03 java -Xms128m -Xmx256m -server -cp /usr/IBM/SPSS/ModelerServer/bin/../ae_wlpserver/usr/servers/aeserver/apps/AE_BOOT.war/WEB-INF/lib/derbynet.jar:/usr/IBM/SPSS/ModelerServer/bin/../ae_wlpserver/usr/servers/aeserver/apps/AE_BOOT.war/WEB-INF/lib/derbytools.jar: org.apache.derby.drda.NetworkServerControl start
-		root      7657     1  0 16:07 pts/0    00:00:23 /usr/IBM/SPSS/ModelerServer/jre/bin/java -XX:MaxPermSize=256m -Xms512M -Xmx2048M -Dconfig.folder.path=/usr/IBM/SPSS/ModelerServer/ae_wlpserver/usr/servers/aeserver/configuration -Dlog4j.configuration=file:////usr/IBM/SPSS/ModelerServer/ae_wlpserver/usr/servers/aeserver/configuration/log4j.xml -Dderby.system.home=/usr/IBM/SPSS/ModelerServer/ae_wlpserver/usr/servers/aeserver -Dclient.encoding.override=UTF-8 -javaagent:/usr/IBM/SPSS/ModelerServer/ae_wlpserver/lib/bootstrap-agent.jar -jar /usr/IBM/SPSS/ModelerServer/ae_wlpserver/lib/ws-launch.jar aeserver --clean
-		root      7733  7657  0 16:07 pts/0    00:00:03 /usr/IBM/SPSS/ModelerServer/jre/bin/java -Dlogger.id=localhost-1200/ -Dconfig.profile= -Dconfig.folder.path=/usr/IBM/SPSS/ModelerServer/ae_wlpserver/usr/servers/aeserver/configuration -Dlog4j.configuration=file:////usr/IBM/SPSS/ModelerServer/ae_wlpserver/usr/servers/aeserver/configuration/log4j.xml -Djava.library.path=/usr/IBM/SPSS/ModelerServer/jre/lib/amd64/default:/usr/IBM/SPSS/ModelerServer/jre/lib/amd64:/usr/IBM/SPSS/ModelerServer/ae_wlpserver/usr/servers/aeserver/configuration/lib_32:/usr/IBM/SPSS/ModelerServer/ae_wlpserver/usr/servers/aeserver/configuration/lib_64::/usr/lib -Xms256m -Xmx2048m -server -Das.child.proc.group=1 -cp apps/AE_BOOT.war/WEB-INF/lib/* com.spss.executionprocess.Main -maxconnections 10 -port 1200
-		root      7740  7657  0 16:07 pts/0    00:00:03 /usr/IBM/SPSS/ModelerServer/jre/bin/java -Dlogger.id=localhost-1201/ -Dconfig.profile= -Dconfig.folder.path=/usr/IBM/SPSS/ModelerServer/ae_wlpserver/usr/servers/aeserver/configuration -Dlog4j.configuration=file:////usr/IBM/SPSS/ModelerServer/ae_wlpserver/usr/servers/aeserver/configuration/log4j.xml -Djava.library.path=/usr/IBM/SPSS/ModelerServer/jre/lib/amd64/default:/usr/IBM/SPSS/ModelerServer/jre/lib/amd64:/usr/IBM/SPSS/ModelerServer/ae_wlpserver/usr/servers/aeserver/configuration/lib_32:/usr/IBM/SPSS/ModelerServer/ae_wlpserver/usr/servers/aeserver/configuration/lib_64::/usr/lib -Xms256m -Xmx2048m -server -Das.child.proc.group=1 -cp apps/AE_BOOT.war/WEB-INF/lib/* com.spss.executionprocess.Main -maxconnections 10 -port 1201
+		root      751321       1  0 19:48 ?        00:00:02 java -Xms128m -Xmx256m -server -cp /usr/IBM/SPSS/AnalyticsServer/bin/../ae_wlpserver/usr/servers/aeserver/apps/AE_BOOT.war/WEB-INF/lib/derbynet.jar:/usr/IBM/SPSS/AnalyticsServer/bin/../ae_wlpserver/usr/servers/aeserver/apps/AE_BOOT.war/WEB-INF/lib/derbytools.jar: org.apache.derby.drda.NetworkServerControl start
+
 		
 	
 

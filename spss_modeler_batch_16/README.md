@@ -39,7 +39,7 @@ Please make sure, role definition looks like
 	 
 -  Once role is created, bootstrap the node as
 
-	knife bootstrap <IP> -x root -P <password> -r role[role_spss_batch_16] -d <distribution>  -j '{"source_path":"URL","dirpath":"spss_batch_server_home"}'
+	knife bootstrap <IP> -x root -P <password> -r role[role_spss_batch_16] -d <distribution>  -j '{"spss_modeler_batch": {"source_path":"URL","dirpath":"spss_batch_server_home"}}'
 	
 	where
 		IP : IP address of node where SPSS Modeler Batch Server need to install
@@ -55,12 +55,12 @@ Please make sure, role definition looks like
 		IP : 172.16.1.152 (Target Node for SPSS Modeler Batch Server installation)
 		Password : test4pass
 		Distribution : rhel (Please check CHEF documentation for more help)
-		URL : http://172.16.1.153 (So if you hit "http://172.16.1.153/spss_mod_Btch_16.0_linux_ml.bin" from browser, you should able to download this file)
-		spss_batch_server_home : /usr/IBM/SPSS/ModelerBatchServer
+		source_path : http://172.16.1.153 (So if you hit "http://172.16.1.153/spss_mod_Btch_16.0_linux_ml.bin" from browser, you should able to download this file)
+		dirpath : /usr/IBM/SPSS/ModelerBatchServer
 		
 		So user can run command like
 		
-		knife bootstrap 172.16.1.152 -x root -P test4pass -r role[role_spss_batch_16] -d rhel -j '{"source_path":"http://172.16.1.153","dirpath":"/usr/IBM/SPSS/ModelerBatchServer"}'		
+		knife bootstrap 172.16.1.152 -x root -P test4pass -r role[role_spss_batch_16] -d rhel -j '{"spss_modeler_batch": {"source_path":"http://172.16.1.153","dirpath":"/usr/IBM/SPSS/ModelerBatchServer"}}'		
 		
 	
 Authors

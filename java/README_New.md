@@ -47,24 +47,25 @@ Create role with command : knife role create role_java
  
 -  Once role is created, bootstrap as
 
-	knife bootstrap <IP Address> -x root –P <password> -r role[role_java] –d <distribution>  -j '{"source_path":"URL"}'
+	knife bootstrap <IP> -x root -P <password> -r role[role_java] -d <distribution>  -j '{"java": {"source_path":"URL"}}'		
 	
 	where
-		IP Address : IP address of node, Where we want to install db2.
+		IP : IP address of node, Where we want to install java.
 		Password : Root password of IP address of node
 		Distribution : Target distribution available
 		URL : HTTP path mentioned in `Installable` section
 		
 		
 - Example : Please note that, this is just example. Please change following values are per your requirements. This values should not be used during cookbook execution.
-		IP : 172.16.1.154 (Target Node for java installation)
+
+		IP : 172.16.1.152 (Target Node for java installation)
 		Password : test4pass
 		Distribution : rhel (Please check CHEF documentation for more help)
 		URL : http://172.16.1.153 (So if you hit "http://172.16.1.153/jdk-7u51-linux-x64.tar.gz" from browser, you should able to download this file)
 		
 		So user can run command like
 		
-		knife bootstrap 172.16.1.154 -x root -P test4pass -r role[role_java] -d rhel -j '{"source_path":"http://172.16.1.153"}'		
+		knife bootstrap 172.16.1.152 -x root -P test4pass -r role[role_java] -d rhel -j '{"java": {"source_path":"http://172.16.1.153"}}'		
 
 # LICENSE and AUTHOR:
 

@@ -83,10 +83,10 @@ end
 #     setting the same password. This chef recipe doesn't have access to
 #     the plain text password, and testing the encrypted (md5 digest)
 #     version is not straight-forward.
-bash "assign-postgres-password" do
-  user 'postgres'
-  code <<-EOH
-echo "ALTER ROLE postgres ENCRYPTED PASSWORD '#{node['postgresql']['password']['postgres']}';" | psql
-  EOH
-  action :run
-end
+#bash "assign-postgres-password" do
+ # user 'postgres'
+  #code <<-EOH
+#echo "ALTER ROLE postgres ENCRYPTED PASSWORD '#{node['postgresql']['password']['postgres']}';" | psql -p #{node['postgresql']['config']['port']}
+ # EOH
+  #action :run
+#end

@@ -59,10 +59,10 @@ Create role with command : knife role create role_db2
 
 -  Once role is created, bootstrap as
 
-	knife bootstrap <IP Address> -x root –P <password> -r role[role_db2] –d <distribution> -j '{"source_path":"URL","repo_path":"REPO_URL"}'
+	knife bootstrap <IP> -x root -P <password> -r role[role_db2] -d <distribution>  -j '{"db2": {"source_path":"URL","repo_path":"REPO_URL"}}'	
 	
 	where
-		IP Address : IP address of node, Where we want to install db2.
+		IP : IP address of node, Where we want to install db2.
 		Password : Root password of IP address of node
 		Distribution : Target distribution available
 		URL : HTTP path mentioned in `Installable` section
@@ -73,12 +73,12 @@ Create role with command : knife role create role_db2
 		IP : 172.16.1.152 (Target Node for DB2 installation)
 		Password : test4pass
 		Distribution : rhel (Please check CHEF documentation for more help)
-		URL : http://172.16.1.153 (So if you hit "http://172.16.1.153/DB2_Svr_V10.5_Linux_x86-64.tar.gz" from browser, you should able to download this file)
-		REPO_URL : http://172.16.0.10:8080/redhat/rhel/6Server/x86_64 (All RPMs are available at this repository)
+		source_path : http://172.16.1.153 (So if you hit "http://172.16.1.153/DB2_Svr_V10.5_Linux_x86-64.tar.gz" from browser, you should able to download this file)
+		repo_path : http://172.16.0.10:8080/redhat/rhel/6Server/x86_64 (All RPMs are available at this repository)
 		
 		So user can run command like
 		
-		knife bootstrap 172.16.1.152 -x root -P test4pass -r role[role_db2] -d rhel -j '{"source_path":"http://172.16.1.153","repo_path":"http://172.16.0.10:8080/redhat/rhel/6Server/x86_64"}'			
+		knife bootstrap 172.16.1.152 -x root -P test4pass -r role[role_db2] -d rhel -j '{"db2": {"source_path":"http://172.16.1.153","repo_path":"http://172.16.0.10:8080/redhat/rhel/6Server/x86_64"}}'				
 		
 ## Verification
 ----------------

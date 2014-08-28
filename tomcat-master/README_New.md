@@ -1,7 +1,7 @@
 
 # DESCRIPTION:
 
-Installs and configures tomcat 7.0.52 only.
+Installs and configures tomcat X.X.XX
 
 
 # REQUIREMENTS:
@@ -48,13 +48,13 @@ Create role with command : knife role create role_tomcat
 
  -  Once role is created, bootstrap as
  
-	knife bootstrap <IP> -x root -P <password> -r role[role_tomcat] -d <distribution>  -j '{"source_path":"URL","base_version":"base_version","full_version":"full_version"}'
+	knife bootstrap <IP> -x root -P <password> -r role[role_tomcat] -d <distribution>  -j '{"tomcat": {"source_path":"URL","base_version":"base_version","full_version":"full_version"}}'		
 	
 	where
 		IP : IP address of node where Tomcat need to install
 		Password : Root password of IP address of node
 		Distribution : Target distribution available
-		URL : HTTP path mentioned in `Installable` section
+		source_path : HTTP path mentioned in `Installable` section
 		base_version : Base version number of Tomcat version.
 		full_version : Full version number of Tomcat versipon.
 	
@@ -64,13 +64,13 @@ Create role with command : knife role create role_tomcat
 		IP : 172.16.1.152 (Target Node for Tomcat installation)
 		Password : test4pass
 		Distribution : rhel (Please check CHEF documentation for more help)
-		URL : http://172.16.1.153 (So if you hit "http://172.16.1.153/apache-tomcat-7.0.52.tar.gz" from browser, you should able to download this file if you are installing Tomcat 7.0.52)
+		URL : http://172.16.1.153 (So if you hit "http://172.16.1.153/apache-tomcat-X.X.XX.tar.gz" from browser, you should able to download this file)
 		base_version : 7
 		full_version : 7.0.52
 		
 		So user can run command like
 		
-		knife bootstrap 172.16.1.152  -x root -P test4pass -r role[role_tomcat] -j '{"source_path":"http://172.16.1.153","base_version":"7","full_version":"7.0.52"}' 
+		knife bootstrap 172.16.1.152 -x root -P test4pass -r role[role_tomcat] -d rhel -j '{"tomcat": {"source_path":"http://172.16.1.153","base_version":"7","full_version":"7.0.52"}}'		
 
 
 ## Verification
@@ -82,6 +82,7 @@ Create role with command : knife role create role_tomcat
 	It should give output as 
 			
 		root      305088       1  6 23:23 pts/0    00:00:03 /usr/lib/jvm/java/bin/java -Djava.util.logging.config.file=/etc/tomcat7/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Djava.endorsed.dirs=/etc/tomcat7/endorsed -classpath /etc/tomcat7/bin/bootstrap.jar:/etc/tomcat7/bin/tomcat-juli.jar -Dcatalina.base=/etc/tomcat7 -Dcatalina.home=/etc/tomcat7 -Djava.io.tmpdir=/etc/tomcat7/temp org.apache.catalina.startup.Bootstrap start
+		
 
 ## Start / Stop of Tomcat
 --------------------------

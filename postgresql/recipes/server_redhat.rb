@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-#include_recipe "postgresql::client"
+include_recipe "postgresql::client"
 
 # Create a group and user like the package will.
 # Otherwise the templates fail.
@@ -45,25 +45,21 @@ directory node['postgresql']['dir'] do
   action :create
 end
 
-directory "/etc/sysconfig/pgsql" do
-  owner "postgres"
-  group "postgres"
-  mode '0755'
-  recursive true
-  action :create
+template "#{node['postgresql']['repo_dir']}/#{node['postgresql']['name']}" do
+    source 'repo.conf.erb'
+    owner 'root'
+    group 'root'
+    mode '0644'   
 end
 
-
-
-
 node['postgresql']['default_pkg'].each do |pkg|
+    package pkg do
+		action :install
+		retries 5
+		retry_delay 10
+	end
+end
 
-      package pkg do
-			action :install
-			retries 5
-			retry_delay 10
-		end
-    end
 
 template "/etc/sysconfig/pgsql/#{node['postgresql']['server']['service_name']}" do
   source "pgsql.sysconfig.erb"

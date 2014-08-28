@@ -1,4 +1,3 @@
-
 remote_file "#{Chef::Config[:file_cache_path]}/#{node['biginsights']['default_pkg']}" do
  source "#{node['biginsights']['source_path']}/#{node['biginsights']['default_pkg']}"
   mode 00755
@@ -11,19 +10,43 @@ template "/tmp/ipv6" do
   mode "0644" 
 end
 
+template "#{node['biginsights']['repo_dir']}/#{node['biginsights']['name']}" do
+    source 'repo.conf.erb'
+    owner 'root'
+    group 'root'
+    mode '0644'
+end
+
+node['biginsights']['lib_pkg'].each do |pkg|
+    package pkg do
+		action :install
+		retries 5
+		retry_delay 10
+	end
+end
+
 bash "Configuring" do
+
   user "root"
- cwd "#{Chef::Config[:file_cache_path]}"
+  cwd "#{Chef::Config[:file_cache_path]}"
+  
   code <<-EOH
+  
   service iptables stop
+  
   echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6
   echo 1 > /proc/sys/net/ipv6/conf/default/disable_ipv6
+  
   cat /tmp/ipv6 >> /etc/sysctl.conf
+  
   service iptables start
   service ntpd start
+  
   chkconfig ntpd on
+  
   tar -zxf #{node['biginsights']['default_pkg']}
   rm -rf #{node['biginsights']['default_pkg']}
+  
   EOH
 end
 

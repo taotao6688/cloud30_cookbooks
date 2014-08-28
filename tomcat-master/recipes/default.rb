@@ -181,9 +181,14 @@ end
 #  action [:enable, :start]  
 #end
 
-execute "start-tomcat" do
+bash "starting" do
 
-      user 'root'
-	  command " /etc/init.d/tomcat#{node['tomcat']['base_version']} start "
-	  
+  user "root"
+  cwd "/etc/init.d"
+
+  code <<-EOH
+		export CATALINA_PID=/etc/tomcat#{node['tomcat']['base_version']}/catalina_pid.txt
+        ./tomcat#{node['tomcat']['base_version']} start
+
+  EOH
 end
