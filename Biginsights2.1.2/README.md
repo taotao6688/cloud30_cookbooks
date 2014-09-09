@@ -18,7 +18,7 @@ Requirements
 
 
 ### Package Requirment
-- Please make sure, all the below mentioned libraries are available at some RPM repository.
+- Please make sure, all the below mentioned libraries are available at RPM repository.
 	- expect
 	- ntp	
 
@@ -30,8 +30,10 @@ Requirements
 
 
 ### ntpstat time synchronization
-- Please make sure, ntpstat program on targeted node, is synchronized with a time server. Do not proceed in case there is issue.
+- Please make sure, ntp is installed and service is started on target node. You can install ntp by command "yum install ntp". 
+- Please make sure, ntpstat program on targeted node, is synchronized with a time server. Do not proceed in case there is issue. It might take few mins for synchronization with time server.
 - In case any issue, please restart ntpd server as "service ntpd restart" following by "ntpdate". It should show correct time
+- Please run command "ntpstat", it should show as "synchronized". In case of any other output, do not proceed. Talk with your administrator for this.
 
 
 ### Default Password for Root
@@ -90,16 +92,13 @@ Please make sure, role definition looks like
 
  -  Once role is created, bootstrap the node as
 
-	knife bootstrap <IP> -x root -P <password> -r role[role_biginsights] -d <distribution>  -j '{"biginsights": {"source_path":"URL","rpm_path":"RPM_URL","sso_domain":"SSO_DOMAIN","node_name":"NODE_NAME"}}'
+	knife bootstrap <IP> -x root -P <password> -r role[role_biginsights] -d <distribution>  -j '{"biginsights": {"source_path":"URL"}}'
 	
 	where
 		IP : IP address of node where BigInsights need to install
 		Password : Root password of IP address of node
 		Distribution : Target distribution available
 		URL : HTTP path mentioned in `Installable` section
-		RPM_URL : RPM Path where you will find the required libraries mentioned above
-		SSO_DOMAIN : SSO Domain name 
-		NODE_NAME : Fully qualified name of target name. Don't provide any IP address. 
 		
 - Example : Please note that, this is just example. Please change following values are per your requirements. This values should not be used during cookbook execution.
 
@@ -107,13 +106,10 @@ Please make sure, role definition looks like
 		Password : test4pass
 		Distribution : rhel (Please check CHEF documentation for more help)
 		source_path : http://172.16.1.153 (So if you hit "http://172.16.1.153/IS_BIGINSIGHTS_EE_V2.1.2_LNX64.tar.gz" from browser, you should able to download this file)
-		rpm_path : http://172.16.0.10:8080/redhat/rhel/6Server/x86_64/ (Where you will find the required libraries mentioned above)
-		sso_domain : domain1
-		node_name : fat-euphrates (Please execute command "hostname" to figure out fully qualified name)
 		
 		So user can run command like
 		
-		knife bootstrap 172.16.1.184 -x root -P test4pass -r role[role_biginsights] -d rhel -j '{"biginsights": {"source_path":"http://172.16.1.153","rpm_path":"http://172.16.0.10:8080/redhat/rhel/6Server/x86_64/","sso_domain":"domain1","node_name":"fat-euphrates"}}'	
+		knife bootstrap 172.16.1.184 -x root -P test4pass -r role[role_biginsights] -d rhel -j '{"biginsights": {"source_path":"http://172.16.1.153"}}'	
 
 		
 		

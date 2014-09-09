@@ -100,8 +100,8 @@
         </service-security>
     </security>
     <Console>
-        <node><%=node['biginsights']['node_name']%></node>
-        <sso-domain-name><%=node['biginsights']['sso_domain']%></sso-domain-name>
+        <node>CHEF_BI_NODENAME</node>
+        <sso-domain-name>CHEF_BI_DOMAINNAME</sso-domain-name>
         <copy-hosts-file>false</copy-hosts-file>
         <web-protocol>HTTP</web-protocol>
         <management-console-port>8080</management-console-port>
@@ -119,7 +119,7 @@
     <Catalog>
         <configure>true</configure>
         <catalog-type>db2</catalog-type>
-        <node><%=node['biginsights']['node_name']%></node>
+        <node>CHEF_BI_NODENAME</node>
         <port>50000</port>
     </Catalog>
     <hadoop>
@@ -133,26 +133,26 @@
             <configure>true</configure>
         </hdfs>
         <namenode>
-            <node><%=node['biginsights']['node_name']%></node>
+            <node>CHEF_BI_NODENAME</node>
             <namenode-port>9000</namenode-port>
             <namenode-http-port>50070</namenode-http-port>
             <name-directory>hadoop/hdfs/name</name-directory>
             <jmx-port>51170</jmx-port>
         </namenode>
         <jobtracker>
-            <node><%=node['biginsights']['node_name']%></node>
+            <node>CHEF_BI_NODENAME</node>
             <jobtracker-port>9001</jobtracker-port>
             <jobtracker-http-port>50030</jobtracker-http-port>
             <jmx-port>51130</jmx-port>
         </jobtracker>
         <secondarynamenode>
-            <node><%=node['biginsights']['node_name']%></node>
+            <node>CHEF_BI_NODENAME</node>
             <secondarynamenode-http-port>50090</secondarynamenode-http-port>
             <data-directory-2nn>hadoop/hdfs/namesecondary</data-directory-2nn>
         </secondarynamenode>
         <datanode>
             <selection-type>Specified</selection-type>
-            <nodes><%=node['biginsights']['node_name']%></nodes>
+            <nodes>CHEF_BI_NODENAME</nodes>
             <datanode-port>50010</datanode-port>
             <datanode-ipc-port>50020</datanode-ipc-port>
             <datanode-http-port>50075</datanode-http-port>
@@ -166,7 +166,7 @@
     </Avro>
     <Hive>
         <configure>true</configure>
-        <hwi-node><%=node['biginsights']['node_name']%></hwi-node>
+        <hwi-node>CHEF_BI_NODENAME</hwi-node>
         <query-directory>var/ibm/biginsights/hive/query</query-directory>
         <log-directory>var/ibm/biginsights/hive/logs</log-directory>
         <hwi-port>9999</hwi-port>
@@ -181,12 +181,12 @@
     </Pig>
     <Oozie>
         <configure>true</configure>
-        <node><%=node['biginsights']['node_name']%></node>
+        <node>CHEF_BI_NODENAME</node>
         <oozie-port>8280</oozie-port>
     </Oozie>
     <Zookeeper>
         <configure>true</configure>
-        <nodes><%=node['biginsights']['node_name']%></nodes>
+        <nodes>CHEF_BI_NODENAME</nodes>
         <data-directory>var/ibm/biginsights/zookeeper/data</data-directory>
         <log-directory>var/ibm/biginsights/zookeeper/logs</log-directory>
         <client-port>2181</client-port>
@@ -198,10 +198,10 @@
     <HBase>
         <configure>true</configure>
         <zookeeper-mode>shared</zookeeper-mode>
-        <master-nodes><%=node['biginsights']['node_name']%></master-nodes>
+        <master-nodes>CHEF_BI_NODENAME</master-nodes>
         <install-mode>fully</install-mode>
         <region-nodes-install-option>Specified</region-nodes-install-option>
-        <region-nodes><%=node['biginsights']['node_name']%></region-nodes>
+        <region-nodes>CHEF_BI_NODENAME</region-nodes>
         <root-directory>/hbase</root-directory>
         <log-directory>var/ibm/biginsights/hbase/logs</log-directory>
         <master-port>60000</master-port>
@@ -218,7 +218,7 @@
     </Flume>
     <node-list>
         <node>
-            <name-or-ip><%=node['biginsights']['node_name']%></name-or-ip>
+            <name-or-ip>CHEF_BI_NODENAME</name-or-ip>
             <password>{xor}</password>
             <rack/>
             <hdfs-data-directory/>
@@ -260,7 +260,7 @@
     <enterprise>
         <Orchestrator>
             <configure>false</configure>
-            <node><%=node['biginsights']['node_name']%></node>
+            <node>CHEF_BI_NODENAME</node>
             <port>8888</port>
         </Orchestrator>
         <GuardiumProxy>
@@ -272,7 +272,7 @@
         </GuardiumProxy>
         <BigSQL>
             <configure>true</configure>
-            <node><%=node['biginsights']['node_name']%></node>
+            <node>CHEF_BI_NODENAME</node>
             <NIC>0.0.0.0</NIC>
             <port>7052</port>
         </BigSQL>
@@ -285,7 +285,7 @@
             </jobtracker-ha>
         </high-availability>
         <alert>
-            <nodes><%=node['biginsights']['node_name']%></nodes>
+            <nodes>CHEF_BI_NODENAME</nodes>
             <port>8380</port>
             <config-smtp>false</config-smtp>
             <smtp-node/>
@@ -308,7 +308,7 @@
     <HttpFS>
         <configure>true</configure>
         <nodes-install-option>Specified</nodes-install-option>
-        <nodes><%=node['biginsights']['node_name']%></nodes>
+        <nodes>CHEF_BI_NODENAME</nodes>
         <log-directory>var/ibm/biginsights/httpfs/logs</log-directory>
         <port>14000</port>
     </HttpFS>

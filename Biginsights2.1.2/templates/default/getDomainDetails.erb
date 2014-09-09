@@ -1,0 +1,27 @@
+ #!/bin/bash
+ECHO=/bin/echo
+MV=/bin/mv
+RM=/bin/rm
+SED=/bin/sed
+
+FILE_LOG="/tmp/log_bi_details.log"
+
+if [ -f ${FILE_BI_DETAILS} ]
+then
+	${ECHO} "Deleting old file : ${FILE_BI_DETAILS}" >> ${FILE_LOG}
+	${RM} -f ${FILE_BI_DETAILS}
+fi
+${ECHO} "Starting Process" >>  ${FILE_LOG}
+${SED} "s/CHEF_BI_NODENAME/`hostname`/g" silent-install/fullinstall.xml > new_fullinstall.xml
+
+DOMAIN_NAME=`hostname -d`
+
+if [ ! ${DOMAIN_NAME}] ;
+then
+	DOMAIN_NAME="domain1"
+fi
+
+${SED} "s/CHEF_BI_DOMAINNAME/${DOMAIN_NAME}/g" new_fullinstall.xml > fullinstall_final.xml
+${MV} fullinstall_final.xml silent-install/fullinstall.xml
+
+${ECHO} "Process Completed" >>  ${FILE_LOG}
