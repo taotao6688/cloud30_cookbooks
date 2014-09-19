@@ -1,0 +1,37 @@
+<server description="new server">
+
+    	<!-- Enable features -->
+	<featureManager>
+        <feature>servlet-3.0</feature>
+        <feature>jsp-2.2</feature>
+    	<feature>jdbc-4.0</feature>
+		<feature>jndi-1.0</feature>
+		<feature>localConnector-1.0</feature>
+		<feature>jaxrs-1.1</feature>
+		<feature>json-1.0</feature>
+		<feature>appSecurity-1.0</feature>
+	</featureManager>
+
+	<httpEndpoint host="*" id="ae_server" httpPort="8080" httpsPort="8443"/>
+	
+    <webContainer deferServletLoad="false" disallowAllFileServing="false" fileServingEnabled="true" trusted="false" directoryBrowsingEnabled="false" asyncTimeoutDefault="300000"/>
+    
+    <jaasLoginContextEntry id="ASLogin" name="ASLogin" loginModuleRef="hashtable, userNameAndPassword, certificate, token"  />
+    
+    <applicationMonitor updateTrigger="mbean" />
+    
+	<variable name="DERBY_JDBC_DRIVER_PATH" value="${wlp.install.dir}/usr/servers/aeserver/sql/derby/lib"/>
+	<variable name="AE_DATABASE" value="${wlp.install.dir}/usr/servers/aeserver/aedb" />
+	
+	<library id="derbyLib">
+		<fileset dir="${DERBY_JDBC_DRIVER_PATH}" includes="derby.jar"/>
+	</library>
+		
+    <application id="AS_BOOT" location="AE_BOOT.war" name="AS_BOOT" type="war" context-root="/"/>
+    <application id="help" location="help.war" name="help" type="war" context-root="/help"/>
+    
+    <basicRegistry id="basic" realm="ibm">
+     	<user name="<%= node['spss_analytics']['admin_username']%>" password="{xor}PjsyNjFubWw="/>
+    </basicRegistry>
+
+</server>

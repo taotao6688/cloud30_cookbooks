@@ -11,8 +11,30 @@ Requirements
 
 ### Installable 
 - Please make sure, `anl_svr_1.0.1.0_l86_en_.tar.gz` is available for installation over HTTP URL as `http://0.0.0.0/`
+- Please make sure, `spss_as_libs.tar.gz` is available for installation over HTTP URL as same mentioned above i.e. `http://0.0.0.0/` 
+
+### Dependencies
+- Please make sure, you have BigInsights 2.1.1 is installed prior proceeding further.
 
 
+### SSH Authentication
+- Please make sure you are able to login to BigInsights node with command :  ssh root@<biginsights_node_name> and vice versa. It is necessary that both nodes (BigInsights node & target node) must be able to login with SSH without password. Do not proceed if this is not working. 
+
+- User can use following steps to configure SSH authentication on BigInsights node & target node
+	- As root, run command : ssh-keygen
+	- Proceed with steps
+	- As root, run commmand : ssh-copy-id -i root@ip_address where ip_address is node where you want to login without password
+	- Verify ssh root@<target_node_name>
+
+	
+### Attributes
+
+- `node["spss_analytics"]["biginsights_user"]` 	 - BigInsights User, default `biadmin`.
+- `node["spss_analytics"]["biginsights_namenode_port"]` - BigInsights NameNode Port, default `9000`.
+- `node["spss_analytics"]["biginsights_jobnode_port"]`  - BigInsights JobNode Port, default `9001`.
+- `node["spss_analytics"]["admin_username"]`     - SPSS AS Console User, default `admin`.
+
+	
 Usage
 -----
 You need to create role specific to SPSS Analytics Server before starting cookbook execution.
@@ -41,7 +63,7 @@ Please make sure, role definition looks like
 	 
 -  Once role is created, bootstrap the node as
 
-	knife bootstrap <IP> -x root -P <password> -r role[role_spss_analytics] -d <distribution>  -j '{"spss_analytics": {"source_path":"URL","dirpath":"spss_analytics_server_home"}}'		
+	knife bootstrap <IP> -x root -P <password> -r role[role_spss_analytics] -d <distribution>  -j '{"spss_analytics": {"source_path":"URL","dirpath":"spss_analytics_server_home","biginsights_ip":"biginsights_ip_address"}}'		
 	
 	where
 		IP : IP address of node where SPSS analytics Server need to install
@@ -49,6 +71,7 @@ Please make sure, role definition looks like
 		Distribution : Target distribution available
 		URL : HTTP path mentioned in `Installable` section
 		spss_analytics_server_home : SPSS Analytics Server Home Directory.
+		biginsights_ip_address : IP Address of BigInsights Server installed
 		
 - Example : Please note that, this is just example. Please change following values are per your requirements. This values should not be used during cookbook execution.
 
@@ -57,12 +80,15 @@ Please make sure, role definition looks like
 		Distribution : rhel (Please check CHEF documentation for more help)
 		source_path : http://172.16.1.153 (So if you hit "http://172.16.1.153/anl_svr_1.0.1.0_l86_en_.tar.gz" from browser, you should able to download this file)
 		dirpath : /opt/IBM/SPSS/AnalyticsServer/1.0.1
-
+		biginsights_ip : 172.16.1.184 (Node where BigInsights 2.1.1 is installed) 
 		
 		So user can run command like
 		
-		knife bootstrap 172.16.1.152 -x root -P test4pass -r role[role_spss_analytics] -d rhel -j '{"spss_analytics": {"source_path":"http://172.16.1.153","dirpath":"/opt/IBM/SPSS/AnalyticsServer/1.0.1"}}'		
+		knife bootstrap 172.16.1.152 -x root -P test4pass -r role[role_spss_analytics] -d rhel -j '{"spss_analytics": {"source_path":"http://172.16.1.153","dirpath":"/opt/IBM/SPSS/AnalyticsServer/1.0.1","biginsights_ip":"172.16.1.184"}}'		
 			
+Note
+------
+Please note, user can other provided attributes (as mentioned above in 'Attribute' section) during bootstrap in case want to change basic setting. It is recommended not to change any default settings.
 		
 
 Commands
