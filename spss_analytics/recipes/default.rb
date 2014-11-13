@@ -8,6 +8,10 @@ remote_file "#{Chef::Config[:file_cache_path]}/#{node['spss_analytics']['default
 	mode 00755
 end
 
+execute "create_biadmin" do
+    command "useradd biadmin"
+end
+
 
 template "/etc/init.d/spss_analytics" do
     source 'init.erb'
