@@ -6,6 +6,13 @@
 #
 # All rights reserved - Do Not Redistribute
 
+bash "yum_update" do 
+	user "root" 
+	code <<-EOH 
+	yum update -y 
+	EOH
+end
+
 %w{ 
   gtk2 
   compat-libstdc++-33 
@@ -50,12 +57,6 @@ end
   end
 end
 
-bash "yum_update" do 
-	user "root" 
-	code <<-EOH 
-	yum update -y 
-	EOH
-end
 
 directory "/var/package" do
         owner "root"

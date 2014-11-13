@@ -6,6 +6,12 @@
 #
 # All rights reserved - Do Not Redistribute
 
+execute "yum-update" do
+  user "root"
+  command "yum -y update"
+  action :run
+end
+
 %w{ 
   libXmu 
 }.each do |pkgname|
@@ -43,20 +49,29 @@ directory "/var/package/ica" do
 	action :create
 end
 
-remote_file "/var/package/ica/IBM_CAWES_V3.0_LINUX_ML.tar" do
-  source "#{node["ica"]["url"]}/IBM_CAWES_V3.0_LINUX_ML.tar"
+case node["ica"]["version"]
+  when "3.0"
+	package_file = "IBM_CAWES_V3.0_LINUX_ML.tar"
+	template_file = "LinuxMasterAllInOneServer.erb"
+  when "3.5"
+	package_file = "IBM_WATSON_CONTENT_ANALYTICS_V3.5.tar"
+	template_file = "LinuxMasterAllInOneServer3_5.erb"
+end
+
+remote_file "/var/package/ica/#{package_file}" do
+  source "#{node["ica"]["url"]}/#{package_file}"
 end
 
 bash "expand_files" do 
 	user "root" 
 	cwd "/var/package/ica" 
 	code <<-EOH 
-	tar xvf IBM_CAWES_V3.0_LINUX_ML.tar
+	tar xvf #{package_file}
 	EOH
 end
 
 template "/var/package/ica/Main/responseFiles/LinuxMasterAllInOneServer.properties" do
-        source "LinuxMasterAllInOneServer.erb"
+        source "#{template_file}"
         owner "root"
         group "root"
         variables({

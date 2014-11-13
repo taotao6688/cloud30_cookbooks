@@ -1,0 +1,52 @@
+################################################################################
+#
+# InstallShield Options File - For Upgrades Only
+#
+# This file contains values that were specified during a recent execution of
+# Install. It can be used to configure Install with the options specified below
+# when the wizard is run with the "-options" command line option. Read each
+# setting's documentation for information on how to change its value.
+#
+# A common use of an options file is to run the wizard in silent mode. This lets
+# the options file author specify wizard settings without having to run the
+# wizard in graphical or console mode. To use this options file for silent mode
+# execution, use the following command line arguments when running the wizard:
+#
+#    -options "XT_silent_upgrade.txt" -silent
+#
+################################################################################
+
+
+################################################################################
+#
+# License Agreement Panel
+#
+# To configure the panel to select "I accept the terms in the license agreement",
+# use:
+#
+#    -V licenseAccepted="true"
+#
+
+-V licenseAccepted="true"
+
+
+################################################################################
+#
+# Application Name
+#
+# This is the name of the application for Ear File deployment
+#
+
+-V ApplicationName=WorkplaceXT
+-V EarDeploy=false
+-V WarDeploy=false
+-V SkipDeploymentFileGeneration=false
+
+################################################################################
+#
+# Daeja ViewONE Pro configuration
+#
+# This is the location to set Daeja ViewONE Pro paths only if sViewONEPRo is set to true
+# set to true, for PIEStreamer Location. Comment it if set to false.
+
+# -V PIEStreamerFolder ="/opt/IBM/FileNet/WebClient/ImageViewerPro/streamer"

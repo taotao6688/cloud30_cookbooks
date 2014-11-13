@@ -1,0 +1,57 @@
+#
+# Cookbook Name:: filenet
+# Recipe:: default
+#
+# Copyright 2014, YOUR_COMPANY_NAME
+#
+# All rights reserved - Do Not Redistribute
+
+
+case node["ica"]["version"]
+  when "3.0"
+	script_file = "ICA_config.sh"
+  when "3.5"
+	script_file = "WCA_config.sh"
+end
+
+directory "/var/package" do
+        owner "root"
+	group "root"
+	action :create
+end
+
+directory "/var/package/ica" do
+        owner "root"
+	group "root"
+	action :create
+end
+
+remote_file "/var/package/ica_lib.tgz" do
+  source "#{node["ica"]["url"]}/ica_lib.tgz"
+end
+
+bash "expand_ica_lib_files" do 
+	user "root" 
+	cwd "/var/package/" 
+	code <<-EOH 
+	tar zxvf ica_lib.tgz
+	EOH
+end
+
+remote_file "/var/package/ica_lib/#{script_file}" do
+  mode "0755"
+  source "#{node["ica"]["url"]}/#{script_file}"
+end
+
+
+bash "start_ica" do 
+	user "root" 
+	code <<-EOH 
+	su - esadmin -l -c 'cp /var/package/ica/ica_lib/*.jar /opt/IBM/es/lib '
+	cd /var/package/ica_lib
+	priip=$(ifconfig eth1 | grep 'inet addr:' | sed -e 's/^.*inet addr://' -e 's/ .*//')
+	./#{script_file} $priip #{node["ica"]["filenet_addr"]}
+	su - esadmin -l -c '/opt/IBM/es/bin/esadmin system stopall || echo'
+	su - esadmin -l -c '/opt/IBM/es/bin/esadmin system startall || echo'
+	EOH
+end
