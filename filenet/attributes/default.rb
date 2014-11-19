@@ -1,2 +1,2 @@
-default["filenet"]["url"]="http://10.106.67.67/software"
+default["filenet"]["url"]="http://192.155.227.3/software"
 

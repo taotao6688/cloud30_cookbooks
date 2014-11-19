@@ -1,0 +1,68 @@
+# ============================================================================================
+# IBM Content Navigator Silent Installation Response File
+# ============================================================================================
+#
+# This file contains the parameters that you must configure to run a silent installation
+# of IBM Content Navigator.
+#
+# Read the information that is provided for each parameter to determine the appropriate
+# value for your installation.
+#
+# Important:
+#       * You must specify a value for each required parameter in the response file.
+#
+#       * If you include a new comment in this response file, ensure that you include a number sign (#) and space
+#         at the beginning of the line.
+#
+#       * If you include special characters in this response file, run the native2ascii tool on the file
+#         to display values that contain special characters as UTF8. For example, run the following command:
+#         native2ascii Response_file.txt Response_file_UTF8.txt
+#
+#
+# To run a silent installation from the command prompt, enter the following command:
+#
+#       * On AIX, Linux, and Linux for System z, enter ./IBM_CONTENT_NAVIGATOR-2.0.2-[PLATFORM].BIN -f <fully qualifed path of the response file>
+#
+
+
+# ============================================================================================
+# Required Installation Parameters
+# ============================================================================================
+#
+# You must enter values for the following installation parameters.
+
+
+# Installation Mode -------------------------------------------
+# To install IBM Content Navigator silently, set the value of the INSTALLER_UI parameter to SILENT.
+
+INSTALLER_UI=SILENT
+
+
+# License Agreement -------------------------------------------
+# To install IBM Content Navigator, you must accept the terms of the license agreement.
+#
+# To accept the terms of the license agreement, set the value of the LICENSE_ACCEPTED parameter to true.
+# By default, this parameter is set to false.
+
+LICENSE_ACCEPTED=true
+
+
+# =============================================================
+# Environment Specific Installation Parameters
+# =============================================================
+#
+# Read the following parameter descriptions to determine which installat
+# your environment.
+
+
+# Installation Directory --------------------------------------
+# If you do not want to install IBM Content Navigator in the default directory,
+# specify the installation directory for IBM Content Navigator.
+#
+# Important:
+#  If you are updating your IBM Content Navigator installation, this parameter is ignored.
+#
+# By default, IBM Content Navigator is installed in the following directory:
+#       * On AIX, Linux, and Linux for System z: /opt/IBM/ECMClient
+
+USER_INSTALL_DIR=/opt/IBM/ECMClient
