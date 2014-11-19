@@ -1,0 +1,3 @@
+
+source <%= node[:mon][:zabbix][:cloud30][:hadoop][:script_path] %>/mikoomi-vars.sh
+<%= node[:mon][:zabbix][:cloud30][:hadoop][:script_path] %>/mikoomi-hadoop-jobtracker-plugin.sh 0 ${ZABBIX_JOBTRACKER_HOST} ${ZABBIX_JOBTRACKER_PORT} ${ZABBIX_JOBTRACKER_NAME} ${ZABBIX_SERVER}

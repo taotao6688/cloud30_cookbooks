@@ -1,0 +1,7 @@
+[zabbix]
+server=<%= node[:mon][:zabbix][:cloud30][:zabbix_server][:host] %>
+url=http://<%= node[:mon][:zabbix][:cloud30][:zabbix_server][:host] %>/zabbix
+login=<%= node[:mon][:zabbix][:cloud30][:zabbix_server][:user] %>,<%= node[:mon][:zabbix][:cloud30][:zabbix_server][:password] %>
+templates = Template OS Linux
+
+

@@ -1,0 +1,75 @@
+{
+  "name": "mon-sal-bi",
+  "description": "",
+  "cookbook_versions": {
+  },
+  "json_class": "Chef::Environment",
+  "chef_type": "environment",
+  "default_attributes": {
+    "floating": "false",
+    "platform_family": "rhel",
+    "package_component": "grizzly",
+    "gsma_site_name": "usda",
+    "gsma_site_instance_number": "4",
+    "gsma_customer_code": "ccz",
+    "site_infra_tier": "dev",
+    "site_version": "1.0",
+    "postfix": {
+      "relayhost_for_server": "cor01",
+      "mail_relay_networks": "127.0.0.0/8, 10.0.0.0/8",
+      "mydomain": "usda4.ccz.ibm.com"
+    }
+
+  },
+  "override_attributes": {
+    "yum": {
+      "epel": {
+        "url": "http://9.2.22.156:8080/yum/epel/$releasever/$basearch",
+        "make_cache": false,
+        "enabled": true,
+        "key": ""
+      }
+    },
+    "db2": {
+      "version": "10.1",
+      "url": "http://9.2.22.156:8080/pub/db2/DB2_ESE_10_Linux_x86-64.tar",
+      "FP_req_packages": {},
+      "download_dir": "/root",
+      "fixpack_url": "http://9.2.22.156:8080/pub/db2/fixpacks/FP3/v10.1fp3_linuxx64_server.tar.gz"
+    },
+    "mon": {
+      "zabbix": {
+        "cloud30": {
+          "sol_id": "1234",
+          "sol_name": "sma",
+          "vm_id": "4567",
+          "vm_ip": "9.47.240.206",
+          "vm_name": "biginsights",
+          "zabbix_server": {
+            "host": "9.47.240.216",
+            "user": "Admin",
+            "password": "zabbix"
+          },
+          "hadoop": {
+            "entity_id": "8910",
+            "jobtrackernode": {
+              "zabbix_host": "biginsights-jobtracker",
+              "host": "9.47.230.203",
+              "port": 50030
+            },
+            "namenode": {
+              "zabbix_host": "biginsights-namenode",
+              "host": "9.47.240.203",
+              "port": 50070
+            }
+          }
+        }
+      },
+      "agent": {
+        "servers": [ "9.47.240.216" ],
+        "servers_active": [ "9.47.240.216" ],
+        "version": "2.2.5"
+      }
+    }
+  }
+}

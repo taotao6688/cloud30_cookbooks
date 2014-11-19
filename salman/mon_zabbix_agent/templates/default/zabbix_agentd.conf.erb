@@ -1,0 +1,11 @@
+Hostname=<%= node[:mon][:zabbix][:cloud30][:vm_name] %>-<%= node[:mon][:zabbix][:cloud30][:vm_id] %>
+LogFile=/tmp/zabbix_agentd.log
+DebugLevel=3
+EnableRemoteCommands=1
+LogRemoteCommands=1
+PidFile=/tmp/zabbix_agentd.pid
+Server=<%= node[:mon][:zabbix][:cloud30][:zabbix_server][:host] %>
+ServerActive=<%= node[:mon][:zabbix][:cloud30][:zabbix_server][:host] %>
+StartAgents=4
+AllowRoot=1
+

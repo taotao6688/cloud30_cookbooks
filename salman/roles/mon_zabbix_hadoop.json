@@ -1,0 +1,18 @@
+{
+  "name": "mon_zabbix_hadoop",
+  "description": "Hadoop job tracker and namenode monitoring",
+  "json_class": "Chef::Role",
+  "default_attributes": {
+  },
+  "override_attributes": {
+  },
+  "chef_type": "role",
+  "run_list": [
+    "recipe[mon_zabbix_common::default]",
+    "recipe[mon_zabbix_hadoop::default]",
+    "recipe[mon_zabbix_hadoop::prepare_hadoop]"
+  ],
+  "env_run_lists": {
+  }
+}
+
