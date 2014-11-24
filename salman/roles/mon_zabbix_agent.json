@@ -1,0 +1,19 @@
+{
+  "name": "mon_zabbix_agent",
+  "description": "Zabbix agent",
+  "json_class": "Chef::Role",
+  "default_attributes": {
+  },
+  "override_attributes": {
+  },
+  "chef_type": "role",
+  "run_list": [
+    "recipe[mon_zabbix_common::default]",
+    "recipe[mon_zabbix_agent::default]",
+    "recipe[mon_zabbix_agent::prepare_os_agent]",
+    "recipe[mon_zabbix_agent::configure_agent]"
+  ],
+  "env_run_lists": {
+  }
+}
+

@@ -1,0 +1,16 @@
+{
+  "name": "mon_zabbix_db2",
+  "description": "DB2 metrics monitoring",
+  "json_class": "Chef::Role",
+  "default_attributes": {
+  },
+  "override_attributes": {
+  },
+  "chef_type": "role",
+  "run_list": [
+    "recipe[mon_zabbix_db2::default]"
+  ],
+  "env_run_lists": {
+  }
+}
+

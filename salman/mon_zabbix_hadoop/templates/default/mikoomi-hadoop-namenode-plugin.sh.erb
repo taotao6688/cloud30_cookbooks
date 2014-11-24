@@ -1,0 +1,6 @@
+##!/usr/bin/sh
+#!/usr/bin/bash
+
+nohup "`dirname $0`"/mikoomi-hadoop-namenode-plugin-helper.sh $* 1>/dev/null 2>/dev/null & 
+echo "Ok"
+exit

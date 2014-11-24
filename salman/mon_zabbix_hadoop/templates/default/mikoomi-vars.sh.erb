@@ -1,0 +1,12 @@
+export ZABBIX_SERVER=<%= node[:mon][:zabbix][:cloud30][:zabbix_server][:host] %>
+
+export ZABBIX_JOBTRACKER_NAME=<%= node[:mon][:zabbix][:cloud30][:hadoop][:jobtrackernode][:zabbix_host] %>-<%= node[:mon][:zabbix][:cloud30][:vm_id] %>
+export ZABBIX_JOBTRACKER_HOST=<%= node[:mon][:zabbix][:cloud30][:hadoop][:jobtrackernode][:host] %>
+export ZABBIX_JOBTRACKER_PORT=<%= node[:mon][:zabbix][:cloud30][:hadoop][:jobtrackernode][:port] %>
+export ZABBIX_JOBTRACKER_CRONDURATION=<%= node[:mon][:zabbix][:cloud30][:hadoop][:jobtrackernode][:cron_duration] %>
+
+export ZABBIX_NAMENODE_NAME=<%= node[:mon][:zabbix][:cloud30][:hadoop][:namenode][:zabbix_host] %>-<%= node[:mon][:zabbix][:cloud30][:vm_id] %>
+export ZABBIX_NAMENODE_HOST=<%= node[:mon][:zabbix][:cloud30][:hadoop][:namenode][:host] %>
+export ZABBIX_NAMENODE_PORT=<%= node[:mon][:zabbix][:cloud30][:hadoop][:namenode][:port] %>
+export ZABBIX_NAMENODE_CRONDURATION=<%= node[:mon][:zabbix][:cloud30][:hadoop][:namenode][:cron_duration] %>
+
