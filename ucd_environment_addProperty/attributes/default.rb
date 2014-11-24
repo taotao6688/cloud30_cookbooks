@@ -1,0 +1,8 @@
+default['udeploy']['server']['hostname']="50.23.133.186"
+default['udeploy']['server']['url']="http://#{node['udeploy']['server']['hostname']}:8080/"
+default['udeploy']['user_name']="admin"
+default['udeploy']['password']="admin"
+default['udeploy']['environment']="#{node['env_name']}"
+default['udeploy']['application']="#{node['application']}"
+default['udeploy']['property']['name']="#{node['property_name']}"
+default['udeploy']['property']['value']="#{node['property_value']}"
